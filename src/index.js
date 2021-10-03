@@ -6,13 +6,19 @@ const onClickAdd = () => {
   const inputText = document.getElementById("input-text").value;
   document.getElementById("input-text").value = "";
 
+  // 未完了リストへの追加
+  addIncompTodo(inputText);
+};
+
+// 未完了リストへの追加（関数）
+const addIncompTodo = (text) => {
   // divを生成
   const div = document.createElement("div");
   div.className = "list-row";
 
   // liを生成
   const li = document.createElement("li");
-  li.innerText = inputText;
+  li.innerText = text;
 
   // 完了ボタンを生成
   const completeButton = document.createElement("button");
@@ -26,10 +32,18 @@ const onClickAdd = () => {
     div.className = "list-row";
     // liを生成
     const li = document.createElement("li");
-    li.innerText = inputText;
+    li.innerText = text;
     // 戻るボタンを生成
     const backButton = document.createElement("button");
     backButton.innerText = "戻る";
+    // 戻るボタンのクリックイベント
+    backButton.addEventListener("click", () => {
+      // 完了リストからの削除
+      const deleteTarget = backButton.parentNode;
+      document.getElementById("complete-list").removeChild(deleteTarget);
+      // 未完了リストへの追加
+      addIncompTodo(text);
+    });
     // divに子要素を追加
     div.appendChild(li);
     div.appendChild(backButton);
